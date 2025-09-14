@@ -2,7 +2,7 @@
 const scene = new THREE.Scene();
 
 //creating a object
-const geometry = new THREE.BoxGeometry(1, 1, 1, 5, 5, 5);
+const geometry = new THREE.BoxGeometry(2, 2, 2);
 const material = new THREE.MeshBasicMaterial({ color: "red" });
 
 //2. Object
@@ -17,21 +17,9 @@ const size = {
   height: window.innerHeight,
 };
 
-const aspectRatio = size.width / size.height;
 //3. Camera
-// const camera = new THREE.PerspectiveCamera(75, aspectRatio);
-const camera = new THREE.OrthographicCamera(
-  -1 * aspectRatio,
-  1 * aspectRatio,
-  1,
-  -1,
-  0.1,
-  100
-);
-camera.position.z = 2;
-camera.position.x = 2;
-camera.position.y = 2;
-camera.lookAt(box.position);
+const camera = new THREE.PerspectiveCamera(75, size.width / size.height);
+camera.position.z = 4;
 
 //adding the camera to the scene
 scene.add(camera);
