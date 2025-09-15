@@ -17,16 +17,19 @@ const size = {
   height: window.innerHeight,
 };
 const cursor = {
-    x:0,y:0
-}
-window.addEventListener('mousemove',(e)=>{
-    cursor.x = e.clientX / size.width - 0.5;
-    cursor.y = e.clientY / size.height - 0.5;
-    console.log(cursor.x , cursor.y)
-})
+  x: 0,
+  y: 0,
+};
+window.addEventListener("mousemove", (e) => {
+  cursor.x = e.clientX / size.width - 0.5;
+  cursor.y = -1 * (e.clientY / size.height - 0.5);
+  // console.log(cursor.x, cursor.y);
+});
 //3. Camera
 const camera = new THREE.PerspectiveCamera(75, size.width / size.height);
 camera.position.z = 4;
+
+// const control = new OrbitControls(camera , canvas)
 
 //adding the camera to the scene
 scene.add(camera);
@@ -42,9 +45,11 @@ renderer.setSize(size.width, size.height);
 let clock = new THREE.Clock();
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
-  box.rotation.y = elapsedTime;
-  camera.position.x= cursor.x;
-  camera.position.y = cursor.y;
+  //box.rotation.y = elapsedTime;
+  camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
+  camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
+  camera.position.y = cursor.y * 3;
+  camera.lookAt(box.position);
   renderer.render(scene, camera);
   window.requestAnimationFrame(tick);
 };
