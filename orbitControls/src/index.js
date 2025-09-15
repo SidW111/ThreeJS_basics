@@ -33,18 +33,29 @@ const renderer = new THREE.WebGLRenderer({ canvas: target });
 
 //set renderer size
 renderer.setSize(size.width, size.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2))
 
-const clock = new THREE.Clock();
+window.addEventListener("resize", () => {
+  size.width = window.innerWidth;
+  size.height = window.innerHeight;
+
+  camera.aspect = size.width / size.height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(size.width, size.height);
+});
+
+// const clock = new THREE.Clock();
 
 const controls = new OrbitControls(camera, target);
-controls.enableDamping= true;
+controls.enableDamping = true;
 
 const tick = () => {
-  const elapsedTime = clock.getElapsedTime();
+  //   const elapsedTime = clock.getElapsedTime();
   //   box.position.y = Math.sin(elapsedTime) * 2;
   //   box.position.x = Math.cos(elapsedTime) * 2;
-  
-  controls.update()
+
+  camera.lookAt(box.position);
+  controls.update();
   requestAnimationFrame(tick);
   //render the scene,camera
   renderer.render(scene, camera);
