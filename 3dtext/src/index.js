@@ -18,27 +18,49 @@ const textureLoader = new THREE.TextureLoader();
 //fonts
 const fontLoader = new FontLoader();
 fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
-const textGeometry = new TextGeometry("Savior", {
-  font: font,
-  // size: 0.5,
-  // height: 0.2,
-  curveSegments:12,
-  bevelEnabled: true,
-  bevelThickness: 0.02,
-  bevelSize: 0.02,
-  bevelSegments: 3,
-  
-});
-  textGeometry.center()
+  const textGeometry = new TextGeometry("Savior", {
+    font: font,
+    size: 0.2,
+    height: 0.0001,
+    curveSegments: 7,
+    bevelEnabled: true,
+    bevelThickness: 0.02,
+    bevelSize: 0.02,
+    bevelSegments: 5,
+  });
+  textGeometry.center();
+textGeometry.scale(1,1,0.001)
+  const textMaterial = new THREE.MeshNormalMaterial({});
 
-  const textMaterial = new THREE.MeshNormalMaterial({ });
+
   const text = new THREE.Mesh(textGeometry, textMaterial);
 
   scene.add(text);
+  const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+  const donutMaterial = new THREE.MeshNormalMaterial();
+
+  for (let i = 0; i < 100; i++) {
+    const donut = new THREE.Mesh(donutGeometry, donutMaterial);
+
+    donut.position.x = (Math.random() - 0.5) * 10;
+    donut.position.y = (Math.random() - 0.5) * 10;
+    donut.position.z = (Math.random() - 0.5) * 10;
+
+    donut.rotation.x = Math.random() * Math.PI;
+    donut.rotation.y = Math.random() * Math.PI;
+
+    const scale = Math.random();
+
+    donut.scale.x = scale;
+    donut.scale.y = scale;
+    donut.scale.z = scale;
+
+    scene.add(donut);
+  }
 });
 
-const axesHelper= new THREE.AxesHelper()
-scene.add(axesHelper)
+const axesHelper = new THREE.AxesHelper();
+scene.add(axesHelper);
 
 //object
 // const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -47,8 +69,8 @@ scene.add(axesHelper)
 // scene.add(mesh);
 
 //camera
-const camera = new THREE.PerspectiveCamera(75, size.width / size.height);
-camera.position.z = 50;
+const camera = new THREE.PerspectiveCamera(45, size.width / size.height);
+camera.position.z = 4;
 scene.add(camera);
 
 //render
